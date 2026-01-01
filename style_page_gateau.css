@@ -1,0 +1,122 @@
+body {
+  margin: 0;
+  min-height: 100vh;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  background: radial-gradient(circle at top, #ffe0e6, #ff9a9e);
+  font-family: 'Segoe UI', sans-serif;
+  text-align: center;
+}
+
+.message {
+  margin-bottom: 30px;
+  color: #fff;
+}
+
+.message h1 {
+  font-size: clamp(2rem, 5vw, 3rem);
+  margin-bottom: 10px;
+}
+
+.message p {
+  font-size: 1.1rem;
+  opacity: 0.9;
+}
+
+
+.flame {
+  position: absolute;
+  top: -18px;
+  left: 50%;
+  transform: translateX(-50%);
+  width: 14px;
+  height: 18px;
+  background: radial-gradient(circle at bottom, yellow, orange, red);
+  border-radius: 50% 50% 50% 50%;
+  animation: flicker 0.15s infinite;
+}
+
+.off {
+  display: none;
+}
+
+.cake-container {
+  position: relative;
+  width: 320px;
+  max-width: 90vw;
+}
+
+.cake-img {
+  width: 100%;
+  display: block;
+}
+
+/* Bougies positionnées SUR le gâteau */
+.candles {
+  position: absolute;
+  top: 5%;
+  left: 0;
+  width: 100%;
+  display: flex;
+  justify-content: space-evenly;
+  pointer-events: none;
+}
+
+.candle {
+  width: 12px;
+  height: 45px;
+  background: repeating-linear-gradient(
+    45deg,
+    #ffffff,
+    #ffffff 4px,
+    #ff69b4 4px,
+    #ff69b4 8px
+  );
+  border-radius: 4px;
+  position: relative;
+}
+
+.flame {
+  position: absolute;
+  top: -18px;
+  left: 50%;
+  transform: translateX(-50%);
+  width: 14px;
+  height: 18px;
+  background: radial-gradient(circle at bottom, yellow, orange, red);
+  border-radius: 50%;
+  animation: flicker 0.15s infinite;
+}
+
+/* Fumée après extinction */
+.smoke {
+  position: absolute;
+  top: -10px;
+  left: 50%;
+  width: 10px;
+  height: 10px;
+  background: rgba(200, 200, 200, 0.7);
+  border-radius: 50%;
+  transform: translateX(-50%);
+  animation: smoke 2s ease-out forwards;
+  filter: blur(1px);
+}
+
+@keyframes smoke {
+  0% {
+    opacity: 0.8;
+    transform: translateX(-50%) translateY(0) scale(1);
+  }
+  100% {
+    opacity: 0;
+    transform: translateX(-50%) translateY(-40px) scale(2);
+  }
+}
+
+@keyframes flicker {
+  0% { transform: translateX(-50%) scale(1); opacity: 1; }
+  50% { transform: translateX(-50%) scale(0.85); opacity: 0.8; }
+  100% { transform: translateX(-50%) scale(1); opacity: 1; }
+}
