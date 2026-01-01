@@ -135,7 +135,7 @@ function startBlowDetection(stream) {
     for (let i = 0; i < dataArray.length; i++) sum += dataArray[i];
     const average = sum / dataArray.length;
 
-    if (average > 100) { // seuil du souffle
+    if (average > 70) { // seuil du souffle
       flames.forEach(flame => {
         flame.classList.add('off');
         const smoke = document.createElement('div');
@@ -160,3 +160,4 @@ function startBlowDetection(stream) {
 
   song.addEventListener('ended', detectBlow);
 }
+
