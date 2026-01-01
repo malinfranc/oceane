@@ -135,7 +135,7 @@ function startBlowDetection(stream) {
     for (let i = 0; i < dataArray.length; i++) sum += dataArray[i];
     const average = sum / dataArray.length;
 
-    if (average > 50) { // souffle détecté
+    if (average > 100) { // souffle détecté
       // 🔥 éteindre les flammes
       flames.forEach(flame => {
         flame.classList.add('off');
@@ -157,13 +157,15 @@ function startBlowDetection(stream) {
       // ⚡ afficher le poème après un petit délai
       setTimeout(() => {
         message.innerHTML = ""; // vide le message
-        message.style.fontSize = "20px";
-        message.style.color = "#ff3366";
-        message.style.fontFamily = "'Segoe UI', Tahoma, Geneva, Verdana, sans-serif";
-        message.style.lineHeight = "1.5";
-        message.style.whiteSpace = "pre-line";
-        message.style.textAlign = "center";
-        message.style.opacity = 1;
+         message.style.fontFamily = "'Dancing Script', cursive";
+  message.style.textAlign = "center";
+  message.style.fontSize = "22px";
+  message.style.lineHeight = "1.6";
+  message.style.color = "#ff3366"; // rose vif
+  message.style.whiteSpace = "pre-line"; // respecter sauts de ligne
+  message.style.maxWidth = "700px";
+  message.style.margin = "0 auto";
+  message.style.textShadow = "2px 2px 8px rgba(255, 182, 193, 0.7)"; // ombre douce
 
         const poem = `Ma douce Océane ❤️,
 Joyeux anniversaire mon trésor ! ✨
@@ -171,7 +173,8 @@ En ce jour si spécial, je te souhaite tout le bonheur du monde, des sourires in
 Que cette nouvelle année de ta vie soit remplie d’amour, de rires, de rêves réalisés et de petites surprises qui te font fondre 😘.
 Tu es mon rayon de soleil, ma joie, mon cœur, et je suis tellement chanceux de t’avoir à mes côtés.
 Aujourd’hui, souffle tes bougies en pensant à tous tes souhaits… et sache que je serai là pour les rendre réalité avec toi ❤️🎂✨.
-Je t’aime plus que les mots ne peuvent le dire, mon amour. 💖💫`;
+Je t’aime plus que les mots ne peuvent le dire, mon amour. 💖💫
+Ton cadeau sera à toi dans quelques jours 🤫.`;
 
         let i = 0;
         const speed = 40;
@@ -185,23 +188,31 @@ Je t’aime plus que les mots ne peuvent le dire, mon amour. 💖💫`;
         }
 
         typeLetter(); // démarrer l'écriture lettre par lettre
-      }, 1000); // délai après le souffle
+      }, 3); // délai après le souffle
       return; // arrêter detectBlow
     }
 
     requestAnimationFrame(detectBlow); // continuer la détection
   }
 
-  // 🎵 Quand la chanson se termine, afficher le message pour souffler
   song.addEventListener('ended', () => {
-    message.innerText = "Fait un voeu et souffle fort sur les bougies ✨";
-    message.style.fontSize = "22px";
-    message.style.color = "#ff3366";
-    message.style.fontFamily = "'Segoe UI', Tahoma, Geneva, Verdana, sans-serif";
-    message.style.textAlign = "center";
+    message.innerText = "Fait ton voeu et souffle fort sur les bougies✨";
+    message.style.fontFamily = "'Dancing Script', cursive";
+  message.style.textAlign = "center";
+  message.style.fontSize = "22px";
+  message.style.lineHeight = "1.6";
+  message.style.color = "#ff3366"; // rose vif
+  message.style.whiteSpace = "pre-line"; // respecter sauts de ligne
+  message.style.maxWidth = "700px";
+  message.style.margin = "0 auto";
+  message.style.opacity = 0; // départ invisible
+  message.style.transition = "opacity 2s ease-in-out, transform 1.5s ease";
+  message.style.textShadow = "2px 2px 8px rgba(255, 182, 193, 0.7)"; // ombre douce
+    setTimeout(() => {
+      message.style.opacity = 1; // fade-in du message pour souffler
+    }, 100);
 
     // démarrer la détection du souffle seulement maintenant
     detectBlow();
   });
 }
-
