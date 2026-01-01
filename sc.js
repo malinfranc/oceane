@@ -1,5 +1,7 @@
 const song = document.getElementById('song');
 const song_ap = document.getElementById('song_ap');
+const song_hbd2 = document.getElementById('song_hbd2');
+const song_amour = document.getElementById('song_amour');
 const flames = document.querySelectorAll('.flame');
 const message = document.getElementById('message');
 
@@ -115,9 +117,8 @@ function showPopup() {
 // 🔔 Lancer le popup au chargement
 window.addEventListener('load', showPopup);
 
-// 2️⃣ Détection du souffle
 function startBlowDetection(stream) {
-  song.play();
+  song.play(); // musique d'anniversaire
 
   const audioContext = new (window.AudioContext || window.webkitAudioContext)();
   const microphone = audioContext.createMediaStreamSource(stream);
@@ -128,37 +129,78 @@ function startBlowDetection(stream) {
   const dataArray = new Uint8Array(analyser.frequencyBinCount);
 
   function detectBlow() {
-    message.innerText = "Souffle fort pour éteindre les bougies ! ✨";
     analyser.getByteFrequencyData(dataArray);
 
     let sum = 0;
     for (let i = 0; i < dataArray.length; i++) sum += dataArray[i];
     const average = sum / dataArray.length;
 
-    if (average > 50) { // seuil du souffle
+    if (average > 100) { // souffle détecté
+      // 🔥 éteindre les flammes
       flames.forEach(flame => {
         flame.classList.add('off');
         const smoke = document.createElement('div');
         smoke.className = 'smoke';
         flame.parentElement.appendChild(smoke);
         setTimeout(() => smoke.remove(), 2000);
-        message.innerText = `Ma douce Océane ❤️,
-            Joyeux anniversaire mon trésor ! ✨
-            En ce jour si spécial, je te souhaite tout le bonheur du monde, des sourires infinis, et des instants magiques rien que pour toi.
-            Que cette nouvelle année de ta vie soit remplie d’amour, de rires, de rêves réalisés et de petites surprises qui te font fondre 😘.
-            Tu es mon rayon de soleil, ma joie, mon cœur, et je suis tellement chanceux de t’avoir à mes côtés.
-            Aujourd’hui, souffle tes bougies en pensant à tous tes souhaits… et sache que je serai là pour les rendre réalité avec toi ❤️🎂✨.
-            Je t’aime plus que les mots ne peuvent le dire, mon amour. 💖💫`;
-
       });
+
+      // stopper le micro
       stream.getTracks().forEach(track => track.stop());
+
+      // jouer applaudissements
       song_ap.play();
-      return;
+      song_ap.addEventListener('ended', () => {song_hbd2.play();});
+      song_hbd2.addEventListener('ended', () => {song_amour.play();});
+
+
+      // ⚡ afficher le poème après un petit délai
+      setTimeout(() => {
+        message.innerHTML = ""; // vide le message
+        message.style.fontSize = "20px";
+        message.style.color = "#ff3366";
+        message.style.fontFamily = "'Segoe UI', Tahoma, Geneva, Verdana, sans-serif";
+        message.style.lineHeight = "1.5";
+        message.style.whiteSpace = "pre-line";
+        message.style.textAlign = "center";
+        message.style.opacity = 1;
+
+        const poem = `Ma douce Océane ❤️,
+Joyeux anniversaire mon trésor ! ✨
+En ce jour si spécial, je te souhaite tout le bonheur du monde, des sourires infinis, et des instants magiques rien que pour toi.
+Que cette nouvelle année de ta vie soit remplie d’amour, de rires, de rêves réalisés et de petites surprises qui te font fondre 😘.
+Tu es mon rayon de soleil, ma joie, mon cœur, et je suis tellement chanceux de t’avoir à mes côtés.
+Aujourd’hui, souffle tes bougies en pensant à tous tes souhaits… et sache que je serai là pour les rendre réalité avec toi ❤️🎂✨.
+Je t’aime plus que les mots ne peuvent le dire, mon amour. 💖💫`;
+
+        let i = 0;
+        const speed = 40;
+
+        function typeLetter() {
+          if (i < poem.length) {
+            message.innerHTML += poem.charAt(i);
+            i++;
+            setTimeout(typeLetter, speed);
+          }
+        }
+
+        typeLetter(); // démarrer l'écriture lettre par lettre
+      }, 1000); // délai après le souffle
+      return; // arrêter detectBlow
     }
-    requestAnimationFrame(detectBlow);
+
+    requestAnimationFrame(detectBlow); // continuer la détection
   }
 
-  song.addEventListener('ended', detectBlow);
+  // 🎵 Quand la chanson se termine, afficher le message pour souffler
+  song.addEventListener('ended', () => {
+    message.innerText = "Fait un voeu et souffle fort sur les bougies ✨";
+    message.style.fontSize = "22px";
+    message.style.color = "#ff3366";
+    message.style.fontFamily = "'Segoe UI', Tahoma, Geneva, Verdana, sans-serif";
+    message.style.textAlign = "center";
+
+    // démarrer la détection du souffle seulement maintenant
+    detectBlow();
+  });
 }
-
-
