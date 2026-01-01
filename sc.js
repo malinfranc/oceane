@@ -206,7 +206,7 @@ Ton cadeau sera à toi dans quelques jours 🤫.`;
   message.style.maxWidth = "700px";
   message.style.margin = "0 auto";
   message.style.opacity = 0; // départ invisible
-  message.style.transition = "opacity 2s ease-in-out, transform 1.5s ease";
+  message.style.transition = "opacity 1s ease-in-out, transform 1s ease";
   message.style.textShadow = "2px 2px 8px rgba(255, 182, 193, 0.7)"; // ombre douce
     setTimeout(() => {
       message.style.opacity = 1; // fade-in du message pour souffler
@@ -216,3 +216,4 @@ Ton cadeau sera à toi dans quelques jours 🤫.`;
     detectBlow();
   });
 }
+
