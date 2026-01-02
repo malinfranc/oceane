@@ -135,7 +135,7 @@ function startBlowDetection(stream) {
     for (let i = 0; i < dataArray.length; i++) sum += dataArray[i];
     const average = sum / dataArray.length;
 
-    if (average > 100) { // souffle détecté
+    if (average > 50) { // souffle détecté
       // 🔥 éteindre les flammes
       flames.forEach(flame => {
         flame.classList.add('off');
@@ -216,4 +216,5 @@ Ton cadeau sera à toi dans quelques jours 🤫.`;
     detectBlow();
   });
 }
+
 
